@@ -1,0 +1,44 @@
+datasource db {
+    provider = "postgresql"
+}
+
+generator client {
+    provider = "prisma-client"
+    output   = "./generated"
+}
+
+model User {
+    id    Int    @id @default(autoincrement())
+    email String @unique
+    pasword_hash String 
+    name String
+    createdAt DateTime @default(now())
+
+    // todo add index
+}
+
+model Poll {
+}
+
+model Question {
+}
+
+model Option {
+}
+
+model Response {
+}
+
+model Answer {
+}
+
+enum PollResponseMode {
+    ANONYMOUS
+    AUTHENTICATED
+}
+
+enum PollState {
+    ACTIVE
+    EXPIRED
+    PUBLISHED
+}
