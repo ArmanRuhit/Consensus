@@ -140,8 +140,9 @@ Reachable from `/dashboard` and `/polls/:id/analytics`. Shows:
 
 ### 5.1 Stack
 
-- **Frontend:** React (Vite), TypeScript, Tailwind CSS, React Router, Socket.io-client, React Hook Form + Zod.
-- **Backend:** Node.js + Express, Socket.io, JWT, bcrypt, Zod.
+- **Frontend:** React (Vite), TypeScript, Tailwind CSS, React Router, Socket.io-client, React Hook Form + Zod, Orval (OpenAPI client codegen).
+- **Backend:** Node.js + Express, Socket.io, JWT, bcrypt, Zod, Swagger UI.
+- **API Documentation:** OpenAPI 3.x spec (manually maintained), served via Swagger UI, used for frontend client generation (Orval).
 - **Database:** PostgreSQL via Prisma.
 - **Deployment:** Frontend on Vercel; backend + database on Railway or Render.
 - **Repo:** Single monorepo with `/client` and `/server` directories.
@@ -267,7 +268,15 @@ Enum poll_state {
 
 **Expiry check:** The composite index on `polls(state, expires_at)` supports the lazy expiry check on every poll fetch.
 
-### 5.4 Key API Endpoints
+### 5.4 API Documentation
+
+An OpenAPI 3.x specification will document all public backend endpoints. The spec will be served alongside the app and used to auto-generate the frontend API client (e.g. via Orval).
+
+- **Tooling:** Swagger UI for interactive docs, OpenAPI JSON file for codegen.
+- **Coverage:** All endpoints listed below, including request bodies, response shapes, and error codes.
+- **Generation:** Spec is maintained manually (not auto-generated from code) to keep tight control over schemas shared with the frontend.
+
+### 5.5 Key API Endpoints
 
 | Method | Path | Auth | Purpose |
 |---|---|---|---|
@@ -283,7 +292,7 @@ Enum poll_state {
 | POST | `/api/polls/:id/publish` | required (creator) | Publish results |
 | POST | `/api/polls/:id/close` | required (creator) | Manually expire early |
 
-### 5.5 Real-Time Channel
+### 5.6 Real-Time Channel
 
 Single Socket.io namespace. Rooms keyed by poll ID. Server joins the creator's socket to `poll:<id>` when they open analytics; emits `response:new` on every successful submission.
 
@@ -513,6 +522,7 @@ A submission is considered complete when:
 - Anonymous duplicate-suppression — hashed IP + user-agent fingerprint.
 - Export results as CSV.
 - Dark mode.
+- Auto-generate OpenAPI spec from code (currently maintained manually).
 - Poll templates as quick starts.
 
 ---
