@@ -168,7 +168,7 @@ Table users {
 Table polls {
   id            uuid       [pk, default: `gen_random_uuid()`]
   short_id      varchar(12) [not null, unique]
-  creator_id    uuid       [not null, ref: > users.id]
+  creator_id    uuid       [not null, ref: > users.id, rel: m2o, onDelete: cascade]
   title         varchar(200) [not null]
   description   varchar(1000)
   response_mode poll_response_mode [not null]
@@ -186,7 +186,7 @@ Table polls {
 
 Table questions {
   id           uuid       [pk, default: `gen_random_uuid()`]
-  poll_id      uuid       [not null, ref: > polls.id, note: 'cascade delete']
+  poll_id      uuid       [not null, ref: > polls.id, rel: m2o, onDelete: cascade]
   text         varchar(500) [not null]
   is_mandatory boolean    [not null, default: false]
   order_index  int        [not null]
@@ -198,7 +198,7 @@ Table questions {
 
 Table options {
   id          uuid       [pk, default: `gen_random_uuid()`]
-  question_id uuid       [not null, ref: > questions.id, note: 'cascade delete']
+  question_id uuid       [not null, ref: > questions.id, rel: m2o, onDelete: cascade]
   text        varchar(200) [not null]
   order_index int        [not null]
 
@@ -209,8 +209,8 @@ Table options {
 
 Table responses {
   id            uuid       [pk, default: `gen_random_uuid()`]
-  poll_id       uuid       [not null, ref: > polls.id, note: 'cascade delete']
-  respondent_id uuid       [ref: > users.id, note: 'null = anonymous']
+  poll_id       uuid       [not null, ref: > polls.id, rel: m2o, onDelete: cascade]
+  respondent_id uuid       [ref: > users.id, rel: m2o, note: 'null = anonymous']
   submitted_at  timestamptz [not null, default: `now()`]
 
   indexes {
@@ -221,9 +221,9 @@ Table responses {
 
 Table answers {
   id                  uuid [pk, default: `gen_random_uuid()`]
-  response_id         uuid [not null, ref: > responses.id, note: 'cascade delete']
-  question_id         uuid [not null, ref: > questions.id]
-  selected_option_id  uuid [ref: > options.id, note: 'null = skipped optional question']
+  response_id         uuid [not null, ref: > responses.id, rel: m2o, onDelete: cascade]
+  question_id         uuid [not null, ref: > questions.id, rel: m2o]
+  selected_option_id  uuid [ref: > options.id, rel: m2o, note: 'null = skipped optional question']
 
   indexes {
     response_id
@@ -246,10 +246,26 @@ Enum poll_state {
 
 ### 5.3 Schema Notes
 
-- **Cascade deletes** flow from poll → questions → options, and from response → answers. Deleting a poll wipes its full subtree.
-- **Partial unique index** on `responses(poll_id, respondent_id)` should be enforced in SQL as `WHERE respondent_id IS NOT NULL` so anonymous responses don't collide on the null value.
-- **`order_index`** columns preserve creator-defined question/option order without depending on insertion timestamps.
-- The composite index on `polls(state, expires_at)` supports the lazy expiry check on every poll fetch.
+**Relationship types:**
+- `m2o` = Many-to-One (foreign key with `onDelete: cascade` unless noted)
+- All relations use `ref: > parent.id` syntax to define foreign key references
+
+**Cascade delete chain:**
+- `polls.creator_id → users.id` — if a user is deleted, their polls are deleted
+- `questions.poll_id → polls.id` — if a poll is deleted, its questions are deleted
+- `options.question_id → questions.id` — if a question is deleted, its options are deleted
+- `responses.poll_id → polls.id` — if a poll is deleted, its responses are deleted
+- `answers.response_id → responses.id` — if a response is deleted, its answers are deleted
+
+**Nullable relationships:**
+- `responses.respondent_id → users.id` — null means anonymous response (no user required)
+- `answers.selected_option_id → options.id` — null means optional question was skipped
+
+**Partial unique index:** on `responses(poll_id, respondent_id)` should be enforced in SQL as `WHERE respondent_id IS NOT NULL` so anonymous responses don't collide on the null value.
+
+**`order_index`** columns preserve creator-defined question/option order without depending on insertion timestamps.
+
+**Expiry check:** The composite index on `polls(state, expires_at)` supports the lazy expiry check on every poll fetch.
 
 ### 5.4 Key API Endpoints
 
