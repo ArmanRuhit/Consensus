@@ -1,0 +1,592 @@
+{
+  "version": "2.11",
+  "children": [
+    {
+      "type": "frame",
+      "id": "W01D2",
+      "x": 1760,
+      "y": 0,
+      "name": "Button/Primary",
+      "reusable": true,
+      "width": "fill_container(0)",
+      "height": 48,
+      "fill": "#4A9FD8",
+      "cornerRadius": 9999,
+      "padding": [
+        0,
+        16
+      ],
+      "justifyContent": "center",
+      "alignItems": "center",
+      "children": [
+        {
+          "type": "text",
+          "id": "s6xcK",
+          "name": "buttonText",
+          "fill": "#FFFFFF",
+          "content": "Button",
+          "fontFamily": "Inter",
+          "fontSize": 15,
+          "fontWeight": "600"
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "oy9P5",
+      "x": 1760,
+      "y": 60,
+      "name": "Input/Field",
+      "reusable": true,
+      "width": 320,
+      "layout": "vertical",
+      "gap": 6,
+      "children": [
+        {
+          "type": "text",
+          "id": "S5NsxJ",
+          "name": "inputLabel",
+          "fill": "#666666",
+          "content": "Label",
+          "fontFamily": "Geist",
+          "fontSize": 13,
+          "fontWeight": "500"
+        },
+        {
+          "type": "frame",
+          "id": "QuI1A",
+          "name": "inputBox",
+          "width": "fill_container",
+          "height": 44,
+          "fill": "#FFFFFF",
+          "cornerRadius": 6,
+          "stroke": {
+            "align": "inside",
+            "thickness": 1,
+            "fill": "#EEF0F2"
+          },
+          "padding": [
+            0,
+            14
+          ],
+          "children": [
+            {
+              "type": "text",
+              "id": "pC0Nr",
+              "name": "inputPlaceholder",
+              "fill": "#888888",
+              "content": "Placeholder",
+              "fontFamily": "Inter",
+              "fontSize": 14,
+              "fontWeight": "normal"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "id": "tFIVu",
+      "x": 1760,
+      "y": 140,
+      "name": "Text/Link",
+      "reusable": true,
+      "fill": "#4A9FD8",
+      "content": "Link",
+      "fontFamily": "Inter",
+      "fontSize": 14,
+      "fontWeight": "500"
+    },
+    {
+      "type": "text",
+      "id": "W6K0po",
+      "x": 1760,
+      "y": 170,
+      "name": "Text/Heading",
+      "reusable": true,
+      "fill": "#1A1A1A",
+      "textGrowth": "fixed-width",
+      "width": 320,
+      "content": "Heading",
+      "fontFamily": "Inter",
+      "fontSize": 36,
+      "fontWeight": "700"
+    },
+    {
+      "type": "frame",
+      "id": "X9UhAc",
+      "x": 1760,
+      "y": 230,
+      "name": "Divider",
+      "reusable": true,
+      "width": 320,
+      "height": 1,
+      "fill": "#EEF0F2"
+    },
+    {
+      "type": "frame",
+      "id": "f1FPe",
+      "x": 0,
+      "y": 0,
+      "name": "Login Screen",
+      "width": 800,
+      "height": 600,
+      "fill": "#FFFFFF",
+      "layout": "vertical",
+      "justifyContent": "center",
+      "alignItems": "center",
+      "children": [
+        {
+          "type": "frame",
+          "id": "vyTqJ",
+          "name": "loginCard",
+          "width": 360,
+          "fill": "#FFFFFF",
+          "cornerRadius": 12,
+          "stroke": {
+            "align": "inside",
+            "thickness": 1,
+            "fill": "#EEF0F2"
+          },
+          "layout": "vertical",
+          "gap": 24,
+          "padding": [
+            40,
+            32
+          ],
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "text",
+              "id": "qv0cX",
+              "name": "loginLogo",
+              "fill": "#1A1A1A",
+              "content": "Consensus",
+              "fontFamily": "Inter",
+              "fontSize": 24,
+              "fontWeight": "700"
+            },
+            {
+              "type": "text",
+              "id": "vN8OI",
+              "name": "loginSubtitle",
+              "fill": "#888888",
+              "content": "Sign in to your account",
+              "fontFamily": "Inter",
+              "fontSize": 14,
+              "fontWeight": "normal"
+            },
+            {
+              "type": "frame",
+              "id": "Hvs25",
+              "name": "loginEmailLabel",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": 6,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "JmSvc",
+                  "name": "loginEmailText",
+                  "fill": "#666666",
+                  "content": "Email",
+                  "fontFamily": "Geist",
+                  "fontSize": 13,
+                  "fontWeight": "500"
+                },
+                {
+                  "type": "frame",
+                  "id": "T0ojg",
+                  "name": "loginEmailBox",
+                  "width": "fill_container",
+                  "height": 44,
+                  "fill": "#FFFFFF",
+                  "cornerRadius": 6,
+                  "stroke": {
+                    "align": "inside",
+                    "thickness": 1,
+                    "fill": "#EEF0F2"
+                  },
+                  "padding": [
+                    0,
+                    14
+                  ],
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "avd2L",
+                      "name": "loginEmailPlaceholder",
+                      "fill": "#888888",
+                      "content": "you@example.com",
+                      "fontFamily": "Inter",
+                      "fontSize": 14,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "A84pRs",
+              "name": "loginPasswordLabel",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": 6,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "ZxiXJ",
+                  "name": "loginPasswordText",
+                  "fill": "#666666",
+                  "content": "Password",
+                  "fontFamily": "Geist",
+                  "fontSize": 13,
+                  "fontWeight": "500"
+                },
+                {
+                  "type": "frame",
+                  "id": "z3ZhHq",
+                  "name": "loginPasswordBox",
+                  "width": "fill_container",
+                  "height": 44,
+                  "fill": "#FFFFFF",
+                  "cornerRadius": 6,
+                  "stroke": {
+                    "align": "inside",
+                    "thickness": 1,
+                    "fill": "#EEF0F2"
+                  },
+                  "padding": [
+                    0,
+                    14
+                  ],
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "M4MZD",
+                      "name": "loginPasswordPlaceholder",
+                      "fill": "#888888",
+                      "content": "Enter your password",
+                      "fontFamily": "Inter",
+                      "fontSize": 14,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "bXpjx",
+              "name": "loginBtn",
+              "width": "fill_container",
+              "height": 48,
+              "fill": "#4A9FD8",
+              "cornerRadius": 9999,
+              "justifyContent": "center",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "ibtJO",
+                  "name": "loginBtnText",
+                  "fill": "#FFFFFF",
+                  "content": "Sign In",
+                  "fontFamily": "Inter",
+                  "fontSize": 15,
+                  "fontWeight": "600"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "qdHeu",
+              "name": "loginSignup",
+              "gap": 4,
+              "justifyContent": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "lf9SS",
+                  "name": "loginSignupText",
+                  "fill": "#888888",
+                  "content": "Don't have an account?",
+                  "fontFamily": "Inter",
+                  "fontSize": 14,
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "text",
+                  "id": "M83u3",
+                  "name": "loginSignupLink",
+                  "fill": "#4A9FD8",
+                  "content": "Sign up",
+                  "fontFamily": "Inter",
+                  "fontSize": 14,
+                  "fontWeight": "500"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "XNixS",
+      "x": 880,
+      "y": 0,
+      "name": "Sign Up Screen",
+      "width": 800,
+      "height": 600,
+      "fill": "#FFFFFF",
+      "layout": "vertical",
+      "justifyContent": "center",
+      "alignItems": "center",
+      "children": [
+        {
+          "type": "frame",
+          "id": "G7YiNy",
+          "name": "signupCard",
+          "width": 360,
+          "fill": "#FFFFFF",
+          "cornerRadius": 12,
+          "stroke": {
+            "align": "inside",
+            "thickness": 1,
+            "fill": "#EEF0F2"
+          },
+          "layout": "vertical",
+          "gap": 20,
+          "padding": 32,
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "text",
+              "id": "d1Imu",
+              "name": "signupLogo",
+              "fill": "#1A1A1A",
+              "content": "Consensus",
+              "fontFamily": "Inter",
+              "fontSize": 24,
+              "fontWeight": "700"
+            },
+            {
+              "type": "text",
+              "id": "xikH6",
+              "name": "signupSubtitle",
+              "fill": "#888888",
+              "content": "Create your account",
+              "fontFamily": "Inter",
+              "fontSize": 14,
+              "fontWeight": "normal"
+            },
+            {
+              "type": "frame",
+              "id": "FavGw",
+              "name": "signupNameLabel",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": 6,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "kdIw7",
+                  "name": "signupNameText",
+                  "fill": "#666666",
+                  "content": "Full Name",
+                  "fontFamily": "Geist",
+                  "fontSize": 13,
+                  "fontWeight": "500"
+                },
+                {
+                  "type": "frame",
+                  "id": "AEjiY",
+                  "name": "signupNameBox",
+                  "width": "fill_container",
+                  "height": 44,
+                  "fill": "#FFFFFF",
+                  "cornerRadius": 6,
+                  "stroke": {
+                    "align": "inside",
+                    "thickness": 1,
+                    "fill": "#EEF0F2"
+                  },
+                  "padding": [
+                    0,
+                    14
+                  ],
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "ByIn8",
+                      "name": "signupNamePlaceholder",
+                      "fill": "#888888",
+                      "content": "John Doe",
+                      "fontFamily": "Inter",
+                      "fontSize": 14,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "thHnn",
+              "name": "signupEmailLabel",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": 6,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "E1aSc",
+                  "name": "signupEmailText",
+                  "fill": "#666666",
+                  "content": "Email",
+                  "fontFamily": "Geist",
+                  "fontSize": 13,
+                  "fontWeight": "500"
+                },
+                {
+                  "type": "frame",
+                  "id": "MTi7g",
+                  "name": "signupEmailBox",
+                  "width": "fill_container",
+                  "height": 44,
+                  "fill": "#FFFFFF",
+                  "cornerRadius": 6,
+                  "stroke": {
+                    "align": "inside",
+                    "thickness": 1,
+                    "fill": "#EEF0F2"
+                  },
+                  "padding": [
+                    0,
+                    14
+                  ],
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "DSUWZ",
+                      "name": "signupEmailPlaceholder",
+                      "fill": "#888888",
+                      "content": "you@example.com",
+                      "fontFamily": "Inter",
+                      "fontSize": 14,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "vRxQJ",
+              "name": "signupPasswordLabel",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": 6,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "hbpzZ",
+                  "name": "signupPasswordText",
+                  "fill": "#666666",
+                  "content": "Password",
+                  "fontFamily": "Geist",
+                  "fontSize": 13,
+                  "fontWeight": "500"
+                },
+                {
+                  "type": "frame",
+                  "id": "uUhlD",
+                  "name": "signupPasswordBox",
+                  "width": "fill_container",
+                  "height": 44,
+                  "fill": "#FFFFFF",
+                  "cornerRadius": 6,
+                  "stroke": {
+                    "align": "inside",
+                    "thickness": 1,
+                    "fill": "#EEF0F2"
+                  },
+                  "padding": [
+                    0,
+                    14
+                  ],
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "dHeiG",
+                      "name": "signupPasswordPlaceholder",
+                      "fill": "#888888",
+                      "content": "At least 8 characters",
+                      "fontFamily": "Inter",
+                      "fontSize": 14,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "iCj4H",
+              "name": "signupBtn",
+              "width": "fill_container",
+              "height": 48,
+              "fill": "#4A9FD8",
+              "cornerRadius": 9999,
+              "justifyContent": "center",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "GVlSm",
+                  "name": "signupBtnText",
+                  "fill": "#FFFFFF",
+                  "content": "Create Account",
+                  "fontFamily": "Inter",
+                  "fontSize": 15,
+                  "fontWeight": "600"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "e7B702",
+              "name": "signupLogin",
+              "gap": 4,
+              "justifyContent": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "XKCnF",
+                  "name": "signupLoginText",
+                  "fill": "#888888",
+                  "content": "Already have an account?",
+                  "fontFamily": "Inter",
+                  "fontSize": 14,
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "text",
+                  "id": "Rf4tf",
+                  "name": "signupLoginLink",
+                  "fill": "#4A9FD8",
+                  "content": "Sign in",
+                  "fontFamily": "Inter",
+                  "fontSize": 14,
+                  "fontWeight": "500"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

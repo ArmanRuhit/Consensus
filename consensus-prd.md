@@ -86,10 +86,12 @@ Validation runs on both client and server. The backend re-validates everything o
 | State | Meaning | Public link behavior |
 |---|---|---|
 | `active` | Created, before expiry | Shows the form; accepts responses |
-| `expired` | Past expiry, not yet published | Shows "This poll has ended"; rejects new responses |
+| `expired` | Past expiry or creator closed early, not yet published | Shows "This poll has ended"; rejects new responses |
 | `published` | Creator published results | Shows results summary to anyone |
 
-State transitions: `active → expired` happens automatically (lazy evaluation at request time, comparing `expires_at` to `now()`). `expired → published` happens when the creator clicks publish. Creators can also manually close a poll early.
+State transitions: `active → expired` happens automatically (lazy evaluation at request time, comparing `expires_at` to `now()`) or manually when the creator calls close. `expired → published` happens when the creator clicks publish. Creators can also manually close a poll early. Once `published`, cannot revert to `expired`.
+
+### 3.4 Taking a Poll
 
 ### 3.4 Taking a Poll
 
@@ -124,6 +126,18 @@ Reachable from `/dashboard` and `/polls/:id/analytics`. Shows:
 - Clicking publish flips the state to `published`.
 - Once published, the public URL `/p/:shortId` renders a read-only results view: question text, options, counts, percentages, total participants.
 - A published poll cannot be unpublished in v1.
+
+### 3.8 Manual Close
+
+- Available to the creator while the poll is `active`.
+- Clicking close flips the state to `expired` immediately — no further responses accepted.
+- Works identically to natural expiry — the public page shows "This poll has ended" and the creator can still publish results after closing.
+
+### 3.9 Sharing
+
+- Each poll has a unique public URL `/p/:shortId`.
+- The creator can copy the link from the poll created screen or from any poll card on the Dashboard.
+- No additional sharing infrastructure (email, QR, social) in v1 — just a copy-to-clipboard button.
 
 ---
 
@@ -286,12 +300,12 @@ An OpenAPI 3.x specification will document all public backend endpoints. The spe
 | POST | `/api/auth/logout` | required | Clear cookie |
 | GET | `/api/auth/me` | required | Current user |
 | POST | `/api/polls` | required | Create poll |
-| GET | `/api/polls/mine` | required | List creator's polls |
+| GET | `/api/polls` | required | List creator's polls |
 | GET | `/api/polls/:shortId` | public | Fetch poll (form or results view depending on state) |
 | POST | `/api/polls/:shortId/responses` | conditional | Submit response |
-| GET | `/api/polls/:id/analytics` | required (creator) | Aggregated analytics |
-| POST | `/api/polls/:id/publish` | required (creator) | Publish results |
-| POST | `/api/polls/:id/close` | required (creator) | Manually expire early |
+| GET | `/api/polls/:shortId/analytics` | required (creator) | Aggregated analytics |
+| POST | `/api/polls/:shortId/publish` | required (creator) | Publish results |
+| POST | `/api/polls/:shortId/close` | required (creator) | Manually expire early |
 
 ### 5.6 Real-Time Channel
 
@@ -419,7 +433,14 @@ These are the canonical shapes the API should accept and produce. Use them as th
 }
 ```
 
-### 6.5 Submit Response
+### 6.5 Close Poll
+
+**Request:** `POST /api/polls/aB3xK9/close` (creator only)
+
+**Response 200:** `{ "message": "Poll closed successfully" }`
+**Errors:** 400 (not an active poll), 401, 403 (not the creator), 404.
+
+### 6.6 Submit Response
 
 **Request:** `POST /api/polls/aB3xK9/responses`
 ```json
@@ -433,7 +454,7 @@ These are the canonical shapes the API should accept and produce. Use them as th
 **Response 201:** `{ "ok": true }`
 **Errors:** 400 (missing mandatory answer, invalid option for question), 401 (authenticated mode, not logged in), 409 (already responded), 410 (poll expired), 429 (rate limit exceeded).
 
-### 6.6 Analytics
+### 6.7 Analytics
 
 **Request:** `GET /api/polls/:id/analytics` (creator only)
 
@@ -472,7 +493,7 @@ These are the canonical shapes the API should accept and produce. Use them as th
 }
 ```
 
-### 6.7 Socket.io `response:new` Event Payload
+### 6.8 Socket.io `response:new` Event Payload
 
 Emitted to room `poll:<pollId>` on every successful response insert:
 ```json
@@ -500,6 +521,10 @@ Client patches state by incrementing `totalResponses` and replacing matching opt
 **Analytics flow.** Dashboard → click poll → see live analytics → watch counts tick up.
 
 **Publish flow.** Poll expires → creator opens analytics → "Publish Results" button → confirm → public link now shows results page.
+
+**Close flow.** Creator opens Dashboard → "Close" on an active poll → poll immediately expired → no more responses accepted → creator can later publish results.
+
+**Share flow.** Creator creates a poll → sees success screen with copyable link → copies to clipboard → shares via Slack, email, etc. Repeat from any poll card in "My Polls."
 
 ---
 
