@@ -242,18 +242,36 @@ The response submission endpoint uses `express-rate-limit` with a custom key gen
 
 ## Deployment
 
-### Backend (Railway / Render)
+The server serves the built client as static files — a single process handles both API and frontend.
 
-1. Set the build command to `cd server && npm install && npm run build`
-2. Set the start command to `cd server && node dist/index.js`
-3. Configure environment variables in the dashboard
+### VPS (Manual)
 
-### Frontend (Vercel)
+```bash
+# 1. Build client
+cd client && npm install && npm run build
 
-1. Set root directory to `client`
-2. Build command: `npm run build`
-3. Output directory: `dist`
-4. Set `CLIENT_URL` in the server env to the deployed frontend URL
+# 2. Build server
+cd ../server && npm install && npm run build
+
+# 3. Configure environment
+cp .env.example .env
+# Edit .env — set DATABASE_URL, JWT_SECRET, and update CLIENT_URL to your domain
+
+# 4. Run with PM2
+npm install -g pm2
+pm2 start dist/index.js --name consensus
+pm2 save
+pm2 startup   # run the output command to enable auto-restart on reboot
+```
+
+The app runs on `http://<your-vps-ip>:3000`. For HTTPS, set up a reverse proxy (nginx, Caddy) that terminates TLS and forwards to port 3000.
+
+### Platform (Railway / Render / Fly.io)
+
+1. **Root directory:** leave at project root
+2. **Build command:** `cd client && npm install && npm run build && cd ../server && npm install && npm run build`
+3. **Start command:** `cd server && node dist/index.js`
+4. **Environment variables:** configure `DATABASE_URL`, `JWT_SECRET`, `CLIENT_URL` in the dashboard
 
 ---
 
