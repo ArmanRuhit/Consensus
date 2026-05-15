@@ -23,14 +23,6 @@ const clearAuthCookie = (res: Response) => {
     });
 };
 
-const clearAuthCookie = (res: Response) => {
-    res.clearCookie("token", {
-        httpOnly: true,
-        secure: false,
-        sameSite: "lax",
-    });
-};
-
 export const register = async (email: string, password: string, name: string, res: Response) => {
     const existing = await prisma.user.findUnique({ where: { email } });
     if (existing) {
