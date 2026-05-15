@@ -97,6 +97,7 @@ State transitions: `active → expired` happens automatically (lazy evaluation a
 - Single-option-per-question selection only (radio buttons).
 - Mandatory questions block submission if unanswered; optional ones do not.
 - Submit calls the backend, which re-validates required questions, verifies the poll is `active`, and records the response.
+- Response submission is rate-limited. Anonymous respondents are throttled by IP; authenticated respondents by user ID. A reasonable default is 1 submission per 10 seconds per poll, configurable via environment variable.
 - In authenticated mode, the API checks the JWT and rejects duplicate submissions from the same user.
 - In anonymous mode, the API stores no respondent identifier.
 - On success, the respondent sees a confirmation screen.
@@ -130,7 +131,7 @@ Reachable from `/dashboard` and `/polls/:id/analytics`. Shows:
 
 - **Performance.** Poll-taking page loads in under 1 second on a typical connection. Analytics updates reach the client in under 1 second of a response being submitted.
 - **Validation.** All inputs validated on the backend regardless of frontend state. Backend is the source of truth.
-- **Security.** Hashed passwords, signed JWTs, rate-limiting on response submission, CORS configured for the deployed frontend origin only.
+- **Security.** Hashed passwords, signed JWTs, CORS configured for the deployed frontend origin only. Rate-limiting is enforced on all response submission endpoints — anonymous respondents are throttled by IP address, authenticated respondents by user ID, to prevent ballot-stuffing and abuse.
 - **Reliability.** Expired polls must reject responses even if the cron/scheduler is down — enforce at the API layer.
 - **Accessibility.** Forms use proper labels, keyboard navigation works, focus states visible.
 
@@ -430,7 +431,7 @@ These are the canonical shapes the API should accept and produce. Use them as th
 }
 ```
 **Response 201:** `{ "ok": true }`
-**Errors:** 400 (missing mandatory answer, invalid option for question), 401 (authenticated mode, not logged in), 409 (already responded), 410 (poll expired).
+**Errors:** 400 (missing mandatory answer, invalid option for question), 401 (authenticated mode, not logged in), 409 (already responded), 410 (poll expired), 429 (rate limit exceeded).
 
 ### 6.6 Analytics
 

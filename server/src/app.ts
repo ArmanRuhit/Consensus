@@ -1,7 +1,7 @@
 import { env } from "./config/env.js";
 import express from "express";
 import cors from "cors"
-
+import cookieParser from 'cookie-parser'
 import { router } from './routes/index.js'
 import { errorMiddleWare } from "./middleware/error.middleware.js";
 import { notFoundMiddleWare } from "./middleware/notFound.middleware.js";
@@ -17,6 +17,8 @@ app.use(cors({
 
 app.use(express.json())
 app.use(express.urlencoded({extended: true}))
+app.use(cookieParser())
+
 
 app.use('/api', router)
 

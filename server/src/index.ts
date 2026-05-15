@@ -5,7 +5,7 @@ import { initSocket } from "./config/socket.js";
 import app from "./app.js";
 
 const httpServer = createServer(app)
-const io = initSocket(httpServer)
+initSocket(httpServer)
 
 httpServer.listen(env.PORT, () => {
     console.log(`Server running on port ${env.PORT} in ${env.NODE_ENV} mode`)
